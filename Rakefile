@@ -6,6 +6,13 @@ RSpec::Core::RakeTask.new
 task :default => :spec
 task :test => :spec
 
+begin
+  spec = Gem::Specification.find_by_name 'butterfli-instagram'
+  Dir["#{spec.gem_dir}/lib/tasks/**/*.rake"].each { |f| load(f) }
+rescue Exception => ex
+  puts 'WARN: Could not load butterfli-instagram rake tasks!'
+end
+
 namespace :doc do
   begin
     require 'yard'
