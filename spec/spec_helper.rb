@@ -2,11 +2,13 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 $LOAD_PATH << File.join(File.dirname(__FILE__))
 
+# Load dependencies
 require 'rubygems'
 require 'pry'
-
-require 'butterfli'
 require 'butterfli-instagram'
+
+# Testing extensions
+require 'butterfli/instagram/test'
 
 Dir["spec/support/**/*.rb"].each { |f| require File.expand_path(f) }
 
@@ -18,5 +20,5 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.include Butterfli::Test # Adds some Butterfli-specific test helpers
+  config.include Butterfli::Instagram::Test # Adds some Butterfli-specific test helpers
 end

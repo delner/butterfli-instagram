@@ -13,3 +13,6 @@ require 'butterfli/instagram/data/media_object'
 
 # Optional Rails hook-in
 require 'butterfli/instagram/railtie' if defined?(Rails)
+
+# Development dependency:
+# require 'butterfli/instagram/test'
