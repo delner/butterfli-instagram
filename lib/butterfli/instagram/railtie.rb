@@ -1,6 +1,6 @@
 module Butterfli
   module Instagram
-    class Railtie < Rails::Railtie
+    class Railtie < ::Rails::Railtie
       railtie_name :butterfli_instagram
 
       rake_tasks do
