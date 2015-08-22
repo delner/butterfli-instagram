@@ -6,6 +6,7 @@ require 'butterfli'
 require 'instagram'
 
 # Load files
+require 'butterfli/instagram'
 require 'butterfli/instagram/configuration'
 require 'butterfli/instagram/configuration/provider'
 require 'butterfli/instagram/data'
