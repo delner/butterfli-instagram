@@ -1,11 +1,9 @@
-
-# TODO: These won't work because Butterfli won't be configured w/ client & secret
-#       Add some alternate way of reading these values (environment var?)
 namespace :butterfli do
   namespace :instagram do
     namespace :subscription do
       desc 'Delete all Instagram subscriptions.'
       task :teardown do |t, args|
+        Butterfli::Instagram::Tasks.configure
         client = Butterfli.configuration.providers(:instagram).client
         puts "Deleting all existing Instagram subscriptions..."
         puts client.delete_subscription( object: 'all')
@@ -15,6 +13,7 @@ namespace :butterfli do
       namespace :geography do
         desc 'Setup Instagram geography subscription.'
         task :setup, [:callback_url, :lat, :lng, :radius] do |t, args|
+          Butterfli::Instagram::Tasks.configure
           puts "Setting up Instagram geography subscription..."
 
           # Parse arguments
@@ -34,3 +33,4 @@ namespace :butterfli do
     end
   end
 end
+

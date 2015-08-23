@@ -11,6 +11,7 @@ require 'butterfli/instagram/configuration'
 require 'butterfli/instagram/configuration/provider'
 require 'butterfli/instagram/data'
 require 'butterfli/instagram/data/media_object'
+require 'butterfli/instagram/tasks'
 
 # Optional Rails hook-in
 require 'butterfli/instagram/railtie' if defined?(Rails)
