@@ -1,0 +1,3 @@
+1. Geography subscription rake task: automatically append route to end of hostname (so developers don't have to guess what the correct route is)
+2. Remove Observable from Butterfli::Instagram. (Use Butterfli module instead.)
+3. Add wrapper around Instagram client to receive Butterfli::Story instead of MediaObject
