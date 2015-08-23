@@ -51,7 +51,7 @@ media_object = client.geography_recent_media(12345678).first
 #       "created_time":"1435437184",
 #       "link":"https:\/\/instagram.com\/p\/ABCDEFGH\/",
 #       "images": { ... }}
-story = Butterfli::Instagram::Data::MediaObject.new(media_object.first).transform
+story = Butterfli::Instagram::Data::MediaObject.new(media_object).transform
 # => #<Butterfli::Story>
 ```
 
