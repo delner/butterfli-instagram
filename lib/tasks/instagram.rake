@@ -12,16 +12,20 @@ namespace :butterfli do
       desc 'Setup Instagram geography subscription.'
       namespace :geography do
         desc 'Setup Instagram geography subscription.'
-        task :setup, [:callback_url, :lat, :lng, :radius] do |t, args|
+        task :setup, [:url_or_host, :lat, :lng, :radius] do |t, args|
           Butterfli::Instagram::Tasks.configure
           puts "Setting up Instagram geography subscription..."
 
           # Parse arguments
-          callback_url = args.callback_url
+          url_or_host = args.url_or_host
           lat = args.lat.to_f
           lng = args.lng.to_f
           radius = args.radius.to_i
           client = Butterfli.configuration.providers(:instagram).client
+
+          callback_url = Butterfli::Instagram::Tasks.url_for( url_or_host,
+                                                              controller: :geography,
+                                                              action: :callback)
           
           puts client.create_subscription( callback_url: callback_url,
                                       object: "geography",

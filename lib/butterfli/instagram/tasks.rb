@@ -10,5 +10,8 @@ module Butterfli::Instagram
         end
       end
     end
+    def self.url_for(host, options = {})
+      return host
+    end
   end
 end
