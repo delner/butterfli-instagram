@@ -34,6 +34,27 @@ namespace :butterfli do
                                       radius: radius)
         end
       end
+      desc 'Setup Instagram location subscription.'
+      namespace :location do
+        desc 'Setup Instagram location subscription.'
+        task :setup, [:url_or_host, :location_object_id] do |t, args|
+          Butterfli::Instagram::Tasks.configure
+          puts "Setting up Instagram location subscription..."
+
+          # Parse arguments
+          url_or_host = args.url_or_host
+          location_object_id = args.location_object_id
+          client = Butterfli.configuration.providers(:instagram).client
+
+          callback_url = Butterfli::Instagram::Tasks.url_for( url_or_host,
+                                                              controller: :location,
+                                                              action: :callback)
+
+          puts client.create_subscription(callback_url: callback_url,
+                                          object: "location",
+                                          object_id: location_object_id)
+        end
+      end
     end
   end
 end
