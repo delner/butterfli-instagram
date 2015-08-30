@@ -10,11 +10,13 @@ class Butterfli::Instagram::Data::MediaObject < Hash
     story = Butterfli::Story.new
 
     # Basic attributes
-    story.source = 'instagram'
-    story.type = self['type']
+    story.source = :instagram
+    story.type = :image # TODO: When non-images are supported, map types
     story.created_date = Time.at(self['created_time'].to_i).to_datetime
 
     # References
+    story.references.source_id = self['id']
+    story.references.source_type = self['type']
     story.references.source_uri = self['link']
 
     # Images

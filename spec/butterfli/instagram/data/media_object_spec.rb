@@ -71,12 +71,14 @@ describe Butterfli::Instagram::Data::MediaObject do
     it { expect(subject).to be_a(Butterfli::Story) }
 
     context "when given basic data" do
-      it { expect(subject.source).to eq('instagram') }
-      it { expect(subject.type).to eq('image') }
+      it { expect(subject.source).to eq(:instagram) }
+      it { expect(subject.type).to eq(:image) }
       it { expect(subject.created_date).not_to be_nil } # TODO: Assert correct content
     end
     context "when given references" do
       subject { super().references }
+      it { expect(subject.source_id).to eq("1016843264003153060_214282566") }
+      it { expect(subject.source_type).to eq("image") }
       it { expect(subject.source_uri).not_to be_nil } # TODO: Assert correct content
     end
     context "when given images" do
