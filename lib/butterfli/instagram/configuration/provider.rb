@@ -1,5 +1,5 @@
 class Butterfli::Instagram::Configuration::Provider < Butterfli::Configuration::Provider
-  attr_accessor :client_id, :client_secret
+  attr_accessor :client_id, :client_secret, :verify_token
 
   def client
     @client ||= ::Instagram.configure do |config|

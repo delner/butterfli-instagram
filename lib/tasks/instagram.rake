@@ -21,17 +21,19 @@ namespace :butterfli do
           lat = args.lat.to_f
           lng = args.lng.to_f
           radius = args.radius.to_i
+          verify_token = Butterfli.configuration.providers(:instagram).verify_token
           client = Butterfli.configuration.providers(:instagram).client
 
           callback_url = Butterfli::Instagram::Tasks.url_for( url_or_host,
                                                               controller: :geography,
                                                               action: :callback)
           
-          puts client.create_subscription( callback_url: callback_url,
-                                      object: "geography",
-                                      lat: lat,
-                                      lng: lng,
-                                      radius: radius)
+          puts client.create_subscription(callback_url: callback_url,
+                                          verify_token: verify_token,
+                                          object: "geography",
+                                          lat: lat,
+                                          lng: lng,
+                                          radius: radius)
         end
       end
       desc 'Setup Instagram location subscription.'
@@ -44,6 +46,7 @@ namespace :butterfli do
           # Parse arguments
           url_or_host = args.url_or_host
           location_object_id = args.location_object_id
+          verify_token = Butterfli.configuration.providers(:instagram).verify_token
           client = Butterfli.configuration.providers(:instagram).client
 
           callback_url = Butterfli::Instagram::Tasks.url_for( url_or_host,
@@ -51,6 +54,7 @@ namespace :butterfli do
                                                               action: :callback)
 
           puts client.create_subscription(callback_url: callback_url,
+                                          verify_token: verify_token,
                                           object: "location",
                                           object_id: location_object_id)
         end
