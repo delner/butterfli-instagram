@@ -7,6 +7,7 @@ module Butterfli::Instagram
         config.provider :instagram do |provider|
           provider.client_id = ENV['INSTAGRAM_CLIENT_ID']
           provider.client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
+          provider.verify_token = ENV['INSTAGRAM_VERIFY_TOKEN']
         end
       end
     end
