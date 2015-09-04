@@ -59,6 +59,29 @@ namespace :butterfli do
                                           object_id: location_object_id)
         end
       end
+      desc 'Setup Instagram tag subscription.'
+      namespace :tag do
+        desc 'Setup Instagram tag subscription.'
+        task :setup, [:url_or_host, :tag] do |t, args|
+          Butterfli::Instagram::Tasks.configure
+          puts "Setting up Instagram tag subscription..."
+
+          # Parse arguments
+          url_or_host = args.url_or_host
+          tag = args.tag
+          verify_token = Butterfli.configuration.providers(:instagram).verify_token
+          client = Butterfli.configuration.providers(:instagram).client
+
+          callback_url = Butterfli::Instagram::Tasks.url_for( url_or_host,
+                                                              controller: :tag,
+                                                              action: :callback)
+
+          puts client.create_subscription(callback_url: callback_url,
+                                          verify_token: verify_token,
+                                          object: "tag",
+                                          object_id: tag)
+        end
+      end
     end
   end
 end
