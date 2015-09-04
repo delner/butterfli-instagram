@@ -22,52 +22,62 @@ class Butterfli::Instagram::Data::MediaObject < Hash
     story.references.source_uri = self['link']
 
     # Images
-    story.images.thumbnail = Butterfli::Imageable::Image.new
-    story.images.thumbnail.uri = self['images']['thumbnail']['url']
-    story.images.thumbnail.width = self['images']['thumbnail']['width']
-    story.images.thumbnail.height = self['images']['thumbnail']['height']
-    story.images.small = Butterfli::Imageable::Image.new
-    story.images.small.uri = self['images']['low_resolution']['url']
-    story.images.small.width = self['images']['low_resolution']['width']
-    story.images.small.height = self['images']['low_resolution']['height']
-    story.images.full = Butterfli::Imageable::Image.new
-    story.images.full.uri = self['images']['standard_resolution']['url']
-    story.images.full.width = self['images']['standard_resolution']['width']
-    story.images.full.height = self['images']['standard_resolution']['height']
+    if self['images']
+      story.images.thumbnail = Butterfli::Imageable::Image.new
+      story.images.thumbnail.uri = self['images']['thumbnail']['url']
+      story.images.thumbnail.width = self['images']['thumbnail']['width']
+      story.images.thumbnail.height = self['images']['thumbnail']['height']
+      story.images.small = Butterfli::Imageable::Image.new
+      story.images.small.uri = self['images']['low_resolution']['url']
+      story.images.small.width = self['images']['low_resolution']['width']
+      story.images.small.height = self['images']['low_resolution']['height']
+      story.images.full = Butterfli::Imageable::Image.new
+      story.images.full.uri = self['images']['standard_resolution']['url']
+      story.images.full.width = self['images']['standard_resolution']['width']
+      story.images.full.height = self['images']['standard_resolution']['height']
+    end
 
     # Author
-    story.author.username = self['user']['username']
-    story.author.name = self['user']['full_name']
+    if self['user']
+      story.author.username = self['user']['username']
+      story.author.name = self['user']['full_name']
+    end
 
     # Text content
-    story.text.body = self['caption']['text']
+    story.text.body = self['caption']['text'] if self['caption']
 
     # Tags
     story.tags.concat(self['tags'])
 
     # Comments
-    comments = self['comments']['data'].collect do |c|
-      comment = Butterfli::Commentable::Comment.new
-      comment.created_date = Time.at(c['created_time'].to_i).to_datetime
-      comment.body = c['text']
-      comment.author.username = c['from']['username']
-      comment.author.name = c['from']['full_name']
-      comment
+    if self['comments']
+      comments = self['comments']['data'].collect do |c|
+        comment = Butterfli::Commentable::Comment.new
+        comment.created_date = Time.at(c['created_time'].to_i).to_datetime
+        comment.body = c['text']
+        comment.author.username = c['from']['username']
+        comment.author.name = c['from']['full_name']
+        comment
+      end
+      story.comments.concat(comments)
     end
-    story.comments.concat(comments)
 
     # Likes
-    likes = self['likes']['data'].collect do |l|
-      like = Butterfli::Likeable::Like.new
-      like.author.username = l['username']
-      like.author.name = l['full_name']
-      like
+    if self['likes']
+      likes = self['likes']['data'].collect do |l|
+        like = Butterfli::Likeable::Like.new
+        like.author.username = l['username']
+        like.author.name = l['full_name']
+        like
+      end
+      story.likes.concat(likes)
     end
-    story.likes.concat(likes)
 
     # Location
-    story.location.lat = self['location']['latitude']
-    story.location.lng = self['location']['longitude']
+    if self['location']
+      story.location.lat = self['location']['latitude']
+      story.location.lng = self['location']['longitude']
+    end
 
     story
   end
