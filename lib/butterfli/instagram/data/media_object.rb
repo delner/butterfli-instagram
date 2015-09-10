@@ -7,7 +7,7 @@ class Butterfli::Instagram::Data::MediaObject < Hash
     # NOTE: We currently don't support non-image media
     return nil if self['type'] != 'image'
 
-    story = Butterfli::Story.new
+    story = Butterfli::Data::Story.new
 
     # Basic attributes
     story.type = :image # TODO: When non-images are supported, map types
@@ -23,15 +23,15 @@ class Butterfli::Instagram::Data::MediaObject < Hash
 
     # Images
     if self['images']
-      story.images.thumbnail = Butterfli::Imageable::Image.new
+      story.images.thumbnail = Butterfli::Data::Schema::Imageable::Image.new
       story.images.thumbnail.uri = self['images']['thumbnail']['url']
       story.images.thumbnail.width = self['images']['thumbnail']['width']
       story.images.thumbnail.height = self['images']['thumbnail']['height']
-      story.images.small = Butterfli::Imageable::Image.new
+      story.images.small = Butterfli::Data::Schema::Imageable::Image.new
       story.images.small.uri = self['images']['low_resolution']['url']
       story.images.small.width = self['images']['low_resolution']['width']
       story.images.small.height = self['images']['low_resolution']['height']
-      story.images.full = Butterfli::Imageable::Image.new
+      story.images.full = Butterfli::Data::Schema::Imageable::Image.new
       story.images.full.uri = self['images']['standard_resolution']['url']
       story.images.full.width = self['images']['standard_resolution']['width']
       story.images.full.height = self['images']['standard_resolution']['height']
@@ -52,7 +52,7 @@ class Butterfli::Instagram::Data::MediaObject < Hash
     # Comments
     if self['comments']
       comments = self['comments']['data'].collect do |c|
-        comment = Butterfli::Commentable::Comment.new
+        comment = Butterfli::Data::Schema::Commentable::Comment.new
         comment.created_date = Time.at(c['created_time'].to_i).to_datetime
         comment.body = c['text']
         comment.author.username = c['from']['username']
@@ -65,7 +65,7 @@ class Butterfli::Instagram::Data::MediaObject < Hash
     # Likes
     if self['likes']
       likes = self['likes']['data'].collect do |l|
-        like = Butterfli::Likeable::Like.new
+        like = Butterfli::Data::Schema::Likeable::Like.new
         like.author.username = l['username']
         like.author.name = l['full_name']
         like

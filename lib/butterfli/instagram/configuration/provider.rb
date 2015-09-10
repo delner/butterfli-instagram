@@ -1,4 +1,4 @@
-class Butterfli::Instagram::Configuration::Provider < Butterfli::Configuration::Provider
+class Butterfli::Instagram::Configuration::Provider < Butterfli::Configuration::Provisioning::Provider
   attr_accessor :client_id, :client_secret, :verify_token
 
   def client
@@ -11,4 +11,4 @@ class Butterfli::Instagram::Configuration::Provider < Butterfli::Configuration::
 end
 
 # Add it to the known providers list...
-Butterfli::Configuration::Providers.register_provider(:instagram, Butterfli::Instagram::Configuration::Provider)
+Butterfli::Configuration::Provisioning::Providers.register_provider(:instagram, Butterfli::Instagram::Configuration::Provider)

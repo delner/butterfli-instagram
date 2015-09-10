@@ -68,7 +68,7 @@ describe Butterfli::Instagram::Data::MediaObject do
  
   describe "#transform" do
     subject { Butterfli::Instagram::Data::MediaObject.new(sample_object).transform }
-    it { expect(subject).to be_a(Butterfli::Story) }
+    it { expect(subject).to be_a(Butterfli::Data::Story) }
 
     context "when given basic data" do
       it { expect(subject.type).to eq(:image) }
@@ -85,9 +85,9 @@ describe Butterfli::Instagram::Data::MediaObject do
     end
     context "when given images" do
       subject { super().images }
-      it { expect(subject.thumbnail).to be_a(Butterfli::Imageable::Image) } # TODO: Assert correct content
-      it { expect(subject.small).to be_a(Butterfli::Imageable::Image) } # TODO: Assert correct content
-      it { expect(subject.full).to be_a(Butterfli::Imageable::Image) } # TODO: Assert correct content
+      it { expect(subject.thumbnail).to be_a(Butterfli::Data::Schema::Imageable::Image) } # TODO: Assert correct content
+      it { expect(subject.small).to be_a(Butterfli::Data::Schema::Imageable::Image) } # TODO: Assert correct content
+      it { expect(subject.full).to be_a(Butterfli::Data::Schema::Imageable::Image) } # TODO: Assert correct content
     end
     context "when given an author" do
       subject { super().author }
