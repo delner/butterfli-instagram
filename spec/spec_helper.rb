@@ -8,6 +8,7 @@ require 'pry'
 require 'butterfli-instagram'
 
 # Testing extensions
+require 'rspec/collection_matchers'
 require 'butterfli/instagram/test'
 
 Dir["spec/support/**/*.rb"].each { |f| require File.expand_path(f) }
