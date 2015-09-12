@@ -1,7 +1,4 @@
-{
-  "pagination": {"next_min_id":"1016843264003153060_214282566"},
-  "meta": {"code": 200},
-  "data": [
+[
     { "attribution":null,
       "tags":["olblueeyes","rubyrose","motherhood"],
       "location":{"latitude":40.784478333,"longitude":-73.971396667},
@@ -179,5 +176,4 @@
         "profile_picture":"https:\/\/instagramimages-a.akamaihd.net\/profiles\/profile_1140747875_75sq_1393793661.jpg",
         "id":"1140747875",
         "full_name":"Garden ObGyn"}}
-  ]
-}
+]
