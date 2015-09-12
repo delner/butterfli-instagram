@@ -17,6 +17,7 @@ require 'butterfli/instagram/data/media_object'
 
 require 'butterfli/instagram/jobs/job'
 require 'butterfli/instagram/jobs/geography_recent_media'
+require 'butterfli/instagram/jobs/location_recent_media'
 
 require 'butterfli/instagram/tasks'
 
