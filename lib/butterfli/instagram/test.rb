@@ -1,12 +1,13 @@
 module Butterfli
   module Instagram
     module Test
-      def configure_for_instagram(client_id = "client_id", client_secret = "client_secret", verify_token = "verify_token")
+      def configure_for_instagram(client_id = "client_id", client_secret = "client_secret", verify_token = "verify_token", &block)
         Butterfli.configure do |config|
           config.provider :instagram do |provider|
             provider.client_id = client_id
             provider.client_secret = client_secret
             provider.verify_token = verify_token
+            block.call(provider) if !block.nil?
           end
         end
       end
