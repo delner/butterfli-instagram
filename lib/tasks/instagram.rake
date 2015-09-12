@@ -1,6 +1,30 @@
 namespace :butterfli do
   namespace :instagram do
     namespace :subscription do
+      desc 'Get list of Instagram subscriptions.'
+      task :list do |t, args|
+        Butterfli::Instagram::Tasks.configure
+        puts "Getting list of Instagram subscriptions..."
+
+        # Parse arguments
+        client = Butterfli.configuration.providers(:instagram).client
+
+        subscriptions = client.subscriptions
+        if subscriptions.meta.code == 200
+          client.subscriptions.each do |subscription|
+            puts "Subscription:"
+            puts "  ID:        #{subscription.id}"
+            puts "  Object:    #{subscription.object}"
+            puts "  Object ID: #{subscription.object_id}"
+            puts "  Callback:  #{subscription.callback_url}"
+          end
+        else
+          puts "Failed to retrieve list of subscriptions!"
+          puts "  Code:    #{subscriptions.meta.code}"
+          puts "  Type:    #{subscriptions.meta.error_type}"
+          puts "  Message: #{subscriptions.meta.error_message}"
+        end
+      end
       desc 'Delete all Instagram subscriptions.'
       task :teardown do |t, args|
         Butterfli::Instagram::Tasks.configure
