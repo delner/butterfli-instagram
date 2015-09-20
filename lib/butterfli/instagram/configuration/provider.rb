@@ -8,6 +8,9 @@ class Butterfli::Instagram::Configuration::Provider < Butterfli::Configuration::
       ::Instagram.client
     end
   end
+  def policies_class
+    Butterfli::Instagram::Configuration::Regulation::Policies
+  end
 end
 
 # Add it to the known providers list...

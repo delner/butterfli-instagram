@@ -5,7 +5,7 @@ module Butterfli::Instagram::Jobs
     attr_accessor :max_obj_id
 
     def hash
-      [self.class.name, self.args[:obj_id], self.args[:min_id]]
+      [self.class.name, self.args[:obj_id]].hash
     end
 
     def get_stories
@@ -22,9 +22,11 @@ module Butterfli::Instagram::Jobs
       stories
     end
     after_work do |job, stories|
+      Butterfli::Instagram::Data::Cache.for.subscription(:geography, job.args[:obj_id]).field(:last_time_ran).write(Time.now)
+    end
+    after_work do |job, stories|
       if !job.args[:skip_pagination_update] && !job.max_obj_id.nil?
-        # TODO: Create intermediate cache layer to centralize cache key management
-        Butterfli.cache.write("Instagram:Subscription:Geography:#{job.args[:obj_id]}:MaxObjectId", job.max_obj_id)
+        Butterfli::Instagram::Data::Cache.for.subscription(:geography, job.args[:obj_id]).field(:max_obj_id).write(job.max_obj_id)
       end
     end
   end

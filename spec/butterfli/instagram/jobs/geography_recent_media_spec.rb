@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.shared_examples_for "a request for stories" do
+RSpec.shared_examples_for "a request for stories (geography)" do
   context "that retrieves no media objects" do
     let(:media_objects) do
       read_media_objects_fixture('media_objects/empty')
@@ -60,7 +60,7 @@ describe Butterfli::Instagram::Jobs::GeographyRecentMedia do
         end
         it do
           expect(job).to_not eq(other_job)
-          expect(job.eql?(other_job)).to be false
+          expect(job.eql?(other_job)).to be true # Equivalent because we don't care if min_id is the same
         end
       end
     end
@@ -76,11 +76,11 @@ describe Butterfli::Instagram::Jobs::GeographyRecentMedia do
       before(:each) do
         allow(job.client).to receive(:geography_recent_media).with(obj_id, Hash) { media_objects }
       end
-      it_behaves_like "a request for stories"
+      it_behaves_like "a request for stories (geography)"
       context "and a min_id" do
         let(:min_id) { "2" }
         let(:options) { { obj_id: obj_id, min_id: min_id } }
-        it_behaves_like "a request for stories"
+        it_behaves_like "a request for stories (geography)"
       end
     end
   end
@@ -94,12 +94,19 @@ describe Butterfli::Instagram::Jobs::GeographyRecentMedia do
     end
     context "when it doesn't retrieve a story" do
       let(:stories) { [] }
-      it { expect(cache).to_not receive(:write); subject }
+      it do
+        expect(cache).to receive(:write).with(Butterfli::Instagram::Data::Cache.for.subscription(:geography, job.args[:obj_id]).field(:last_time_ran).key, Time)
+        subject
+      end
     end
     context "when it retrieves a story" do
       let(:story) { s = Butterfli::Data::Story.new; s.source.id = 1; s }
       let(:stories) { [story] }
-      it { expect(cache).to receive(:write).with(String, story.source.id); subject }
+      it do
+        expect(cache).to receive(:write).with(Butterfli::Instagram::Data::Cache.for.subscription(:geography, job.args[:obj_id]).field(:last_time_ran).key, Time)
+        expect(cache).to receive(:write).with(Butterfli::Instagram::Data::Cache.for.subscription(:geography, job.args[:obj_id]).field(:max_obj_id).key, story.source.id)
+        subject
+      end
     end
   end
 end
