@@ -2,7 +2,7 @@
 Instagram
 ==========
 
-[![Build Status](https://travis-ci.org/delner/butterfli-instagram.svg?branch=master)](https://travis-ci.org/delner/butterfli-instagram) ![Gem Version](https://badge.fury.io/rb/butterfli-instagram.svg)
+[![Build Status](https://travis-ci.org/delner/butterfli-instagram.svg?branch=master)](https://travis-ci.org/delner/butterfli-instagram) ![Gem Version](https://img.shields.io/gem/v/butterfli-instagram.svg?maxAge=2592000)
 ###### *For Ruby 1.9.3, 2.0.0, 2.1.0*
 
 ### Introduction
